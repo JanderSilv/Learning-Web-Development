@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aprendendo DOM</title>
+    <style>
+        body {
+            background: rgb(55, 102, 190);
+            color: white;
+            font: normal 18pt Arial;
+        }
+    </style>
+</head>
+<body>
+    <h1>Iniciando estudos DOM</h1>
+    <p name ="par">Aqui vai o resultado</p>
+    <p>Aprendendo a usar o <strong>DOM</strong> em JavaScript</p>
+    <div id="msg">Clique em mim</div>
+    <script>
+
+        /* DOM = Document Object Model
+        * Modelo de objetos para documentos
+        * Conjunto de objetos dentro do navageador que da acesso aos componentes internos do website
+        */
+
+        var corpo = window.document.body
+            corpo.style.background = 'black'
+
+        var p1 = window.document.getElementsByTagName('p')[1] // Pegando informação do primeiro parágrafo
+            p1.style.color = 'blue'
+            document.write("<br>" + p1.innerText + "<br>") // Pega a informação do parágrafo
+            document.write(p1.innerHTML) // Aplica as subtags
+
+        var d = document.getElementById('msg')
+            d.style.background = 'green'
+            d.innerText = 'Estou aguardando...'
+
+        var p = document.getElementsByName('par')[0]
+            p.innerText = 'Olá'
+
+        var q = document.querySelector('div#msg')
+            q.style.background = 'yellow'
+
+        /* QuerySelector é um metodo mais novo para trabalhar com ID e CLASS com um único metódo
+            # Id / . Class
+        */
+       </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Eventos DOM - Intro</title>
+    <style>
+        div#area {
+            font: normal 20pt Arial;
+            background: rgb(69, 122, 223);
+            color: white;
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <!-- <div id="area" onclick="Clicar()" onmousedown="Segurar()" onmouseover="Hover()" onmouseout="OutHover()"> -->
+    <div id="area">
+        INTERAJA
+    </div>
+
+    <script>
+        
+        // Para trabalhar com eventos, é possível defini-los no HTML ou com o Listener em JS.
+
+        var areaValue = document.getElementById("area")
+        areaValue.addEventListener("click", Clicar)
+        areaValue.addEventListener("mouseenter", Hover)
+        areaValue.addEventListener("mousedown", Segurar)
+        areaValue.addEventListener("mouseout", OutHover)
+
+        function Clicar() {
+            areaValue.innerText =  "Clicou"
+            areaValue.style.background = "green"
+        }
+
+        function Segurar() {
+            areaValue.innerText = "Segurando..."
+            areaValue.style.background =  "red"
+        }
+
+        function Hover() {
+            areaValue.innerText = "Passando..."
+            areaValue.style.background = "orange"
+        }
+
+        function OutHover() {
+            areaValue.innerText = "Tchau"
+            areaValue.style.background = "purple"
+        }
+
+    </script>
+</body>
+</html>

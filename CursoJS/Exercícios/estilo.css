@@ -3,6 +3,16 @@ body {
     font: normal 15pt Arial;
 }
 
+div {
+    text-align: center;
+    margin: 10px;
+}
+
+div#sdc {
+    text-align: center;
+    margin: 10px;
+}
+
 header {
     color: white;
     text-align: center
@@ -18,7 +28,7 @@ section {
 }
 
 footer {
-    color: white;
+    color: rgb(236, 235, 235);
     text-align: center;
     font-style: italic;
 }

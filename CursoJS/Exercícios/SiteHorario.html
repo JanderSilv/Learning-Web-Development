@@ -7,22 +7,26 @@
     <title>Horário</title>
     <link rel="stylesheet" href="estilo.css">
 </head>
-<body>
+<body onload="Carregar();setInterval('Atualizar()',60000);">
     <header>
-        <h1>Título</h1>
+        <h1>Hora do Dia</h1>
     </header>
     
     <section>
-        <div>
-
-        </div>
-        <div>
-
+        <!-- Hora atual -->
+        <div id="msg"></div>
+        <!-- Saudação -->
+        <div id="sdc"></div>
+        <!-- Imagem -->
+        <div id="foto">
+            <img id="imagem" src="Imagens/foto_manha.png" alt="Foto do Dia"> 
         </div>
     </section>
 
     <footer>
-        <p>&copy;JanderSilv</p>
+        <p>&copy; JanderSilv</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

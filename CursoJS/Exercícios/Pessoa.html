@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pessoa</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        /* input[type=number] { 
+            -moz-appearance: textfield;
+        } */
+        input {
+            font: normal 12pt Arial;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>Suas Informações</h1>
+    </header>
+
+    <section>
+
+        <div>
+            <p>
+                Ano de Nascimento: <input type="text" name="txtnasc" id="txtnasc" placeholder="Ex: 2019" size="8" maxlength="4"/>
+            </p>
+
+            <p>
+                Sexo: <input type="radio" name="tSexo" id="cMasc" checked><label for="cMasc">Masculino</label>
+                      <input type="radio" name="tSexo" id="cFem"><label for="cFem">Feminino</label>
+            </p>
+
+            <p>
+                <input id="btn_enviar" type="button" value="Enviar" onclick="Enviar()">
+            </p>                
+        </div>
+
+        <div id="msg">Preencha os dados acima</div>
+            
+    </section>
+
+    <footer>
+        <p>&copy; JanderSilv</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

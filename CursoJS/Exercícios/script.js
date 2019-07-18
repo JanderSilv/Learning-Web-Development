@@ -102,7 +102,7 @@ function Enviar() {
     }
 }
 
-function Calcula() {
+function CalculaIntervalo() {
     // Recebe os valores dos formulários
     let txtNumInicial = document.getElementById('numeroInicial')
     let txtNumFinal = document.querySelector('input#numeroFinal')
@@ -143,5 +143,25 @@ function Calcula() {
             }
         }
         mensagem.innerHTML += "🎯"
+    }
+}
+
+function CalculaTabuada() {
+            
+    let txtNumTabuada = document.getElementById('numTabuada')
+    let listaTabuada = document.querySelector('select#listaTabuada')  
+
+    var numTabuada = Number(txtNumTabuada.value)
+
+    if (txtNumTabuada == 0) {
+        alert('[ERRO] Preencha o campo')
+    } else {
+        listaTabuada.innerHTML = ''
+        for (let i=1; i<=10; i++) {
+            let item = document.createElement('option')
+            item.text = `${numTabuada} x ${i} = ${numTabuada * i}`
+            item.value = `listaTabuada${i}`
+            listaTabuada.appendChild(item)
+        }
     }
 }

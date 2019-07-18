@@ -55,7 +55,7 @@ function Enviar() {
     img.setAttribute('id', 'foto')
     
     if (Number(txtNasc.value) >= 1919 && Number(txtNasc.value) <= 1939) window.alert("Quase morrendo ein!?")
-    if (Number(txtNasc.value) < 1919) window.alert("Tá fazendo o que vivo ainda?")
+    if (Number(txtNasc.value) > 999 && Number(txtNasc.value) < 1919) window.alert("Tá fazendo o que vivo ainda?")
     if (Number(txtNasc.value) == ano) window.alert("Nasceu hoje?")
 
     if (txtNasc.value.length != 4) {
@@ -99,5 +99,49 @@ function Enviar() {
         
         img.style.margin = "15px"
         msg.appendChild(img)
+    }
+}
+
+function Calcula() {
+    // Recebe os valores dos formulários
+    let txtNumInicial = document.getElementById('numeroInicial')
+    let txtNumFinal = document.querySelector('input#numeroFinal')
+    let txtValorStep = document.getElementById('valorStep')
+    var mensagem = document.getElementById('msg')
+    // Converte para Number
+    let numInicial = Number(txtNumInicial.value)
+    let numFinal = Number(txtNumFinal.value)
+    var valorStep = Number(txtValorStep.value)
+    // Verificação dos dados
+    if (txtNumInicial.value.length == 0 || txtNumFinal.value.lenght == 0 || txtValorStep.value.lenght == 0) {
+        alert ("[ERRO] Verifique os dados")
+        mensagem.innerHTML = "Preencha os campos vazios"
+    }
+    else if (numInicial == numFinal) {
+        alert("[ERRO] O valor inicial não pode ser igual ao final")
+        mensagem.innerHTML = "Modifique o intervalo"
+    }
+    else if (valorStep > (numFinal+numInicial)) {
+        alert("[ERRO] A passada é maior que o intervalo")
+        mensagem.innerHTML = "Coloque um passo que seja menor que a soma dos valores"
+    } else {
+
+        if (valorStep <= 0) {
+            alert("[ERRO] O valor da passada não pode ser 0, definido para 1")
+            valorStep = 1;
+        }    
+        
+        mensagem.innerHTML = `Contando: `
+
+        if (numInicial < numFinal) {
+            for (let i=numInicial; i <= numFinal; i+=valorStep) {              
+                mensagem.innerHTML += `${i} 👉🏻 `
+            }                        
+        } else {
+            for (let i=numInicial; i >= numFinal; i-=valorStep) {
+                mensagem.innerHTML += `${i} 👉🏻 `
+            }
+        }
+        mensagem.innerHTML += "🎯"
     }
 }

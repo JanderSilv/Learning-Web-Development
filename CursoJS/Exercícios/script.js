@@ -165,3 +165,81 @@ function CalculaTabuada() {
         }
     }
 }
+
+let txtValor = document.getElementById('valor')
+let listaValores = document.getElementById('listaValores')
+let resultado = document.querySelector('div#res')
+let valores = []
+
+//let valor = Number(txtValor.value)
+
+function inRange(numero) {
+    if (Number(numero) >= 1 && Number(numero) <= 100) return true
+    else return false
+}
+
+function inLista(numero, lista) {
+    if (lista.indexOf(Number(numero)) != -1) return true
+    else return false
+}
+
+function Adicionar() {
+
+    if (inRange(txtValor.value) && !inLista(txtValor.value, valores)) {
+        valores.push(Number(txtValor.value))
+        let item = document.createElement('option')
+        item.text = `Valor ${txtValor.value} adicionado.`
+        listaValores.appendChild(item)
+        resultado.innerHTML = ""
+    } else {
+        alert("[ERRO] Valor inválido ou já encontrado na lista")
+    }
+
+    txtValor.value = ""
+    txtValor.focus()
+
+}
+
+function Finalizar() {
+
+    if (valores.length == 0) {
+        alert('Adicione valores antes de finalizar')
+    } else {
+        let qntElementos_ListaValores = valores.length
+
+        resultado.innerHTML = ""
+        resultado.innerHTML = '--------------------------------------------------------'
+        resultado.innerHTML += `<p>1. Ao todo, temos <strong>${qntElementos_ListaValores}</strong> números cadastrados.</p>`
+        resultado.innerHTML += `<p>2. O maior valor entre os números, é <strong>${maiorValor(valores)}</strong>.</p>`
+        resultado.innerHTML += `<p>3. O menor valor entre os números, é <strong>${menorValor(valores)}</strong>.</p>`
+        resultado.innerHTML += `<p>4. A soma dos números, é <strong>${somaValores(valores)}</strong>.</p>`
+        resultado.innerHTML += `<p>5. A média dos números, é <strong>${somaValores(valores)/qntElementos_ListaValores}</strong>.</p>`
+    }
+}
+
+function maiorValor(lista) {
+    let maior = lista[0]
+
+    for (let pos in lista) {
+        if (lista[pos] > maior) maior = lista[pos]
+    }
+    return maior
+}
+
+function menorValor(lista) {
+    let menor = lista[0]
+
+    for (let pos in lista) {
+        if (lista[pos] < menor) menor = lista[pos]    
+    }
+    return menor
+}
+
+function somaValores(lista) {
+    let soma = 0
+
+    for (let pos in lista) {
+        soma += lista[pos]
+    }
+    return soma
+}

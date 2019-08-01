@@ -1,0 +1,53 @@
+body {
+    background: rgb(46, 45, 45);
+    font: normal 15pt Arial;
+    text-align: center;
+    color: white;
+}
+
+div {
+    margin: 10px;
+}
+
+#visor input {
+    border-radius: 3px;
+    width: 146px;
+    height: 20px;
+    color: white;
+    background-color: rgba(73, 69, 69, 0.897);
+}
+
+#teclas table {
+    margin: auto;
+}
+
+#teclas tr {
+    margin: 30px;
+}
+
+#teclas input {
+    width: 35px;
+    height: 35px;
+    color: white;
+}
+
+.simbolo {
+    background-color: rgba(59, 56, 56, 0.767);
+}
+
+.numeros {
+    background-color: rgb(46, 45, 45);
+}
+
+section {
+    margin: auto;
+    background: white;
+    width: 500px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.541);
+}
+
+footer {
+    font-style: italic;
+}

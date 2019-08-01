@@ -171,7 +171,7 @@ let listaValores = document.getElementById('listaValores')
 let resultado = document.querySelector('div#res')
 let valores = []
 
-//let valor = Number(txtValor.value)
+//let valor = txtValor.value
 
 function inRange(numero) {
     if (Number(numero) >= 1 && Number(numero) <= 100) return true

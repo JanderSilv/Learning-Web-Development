@@ -15,11 +15,6 @@ function deleteCharacter() {
     document.calcInput.txtVisor.value -= ""
 }
 
-function ClearDisplay() {
-    document.calcInput.txtVisor.value = "0"
-    firstInput = true;
-}
-
 function ResetCalc() {
     displayValue = 0
     document.calcInput.txtVisor.value = "0"
@@ -27,7 +22,7 @@ function ResetCalc() {
 }
 
 function Resolver() {
-
+    document.calcInput.txtVisor.value = eval(document.calcInput.txtVisor.value)
     console.log(displayValue)
 }
 

@@ -11,7 +11,7 @@ header {
 section {
     background: white;
     width: 510px;
-    padding: 14px;
+    padding: 8px;
     margin: auto;
     border-radius: 10px;
     box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.507);
@@ -23,18 +23,24 @@ section {
     margin: auto;
     background-color: rgb(54, 54, 59);
     color: white;
-    border: 6px solid rgb(112, 61, 194);
+    border: 6px solid rgb(92, 114, 216);
     border-radius: 10px;
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
 
 .game > div {
-    border: 6px solid rgb(112, 61, 194);
+    border: 6px solid rgb(92, 114, 216);
     font: bold 4em Helvetica;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.game > div.winner {
+    color: rgb(166, 255, 0);
+    cursor: default;
 }
 
 footer {

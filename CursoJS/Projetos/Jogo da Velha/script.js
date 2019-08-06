@@ -1,3 +1,5 @@
+// Fazer inteligência artificial
+
 const jogoVelha = {
 
     board: ["", "", "", "", "", "", "", "", "",],
@@ -22,7 +24,6 @@ const jogoVelha = {
         // Sequencias Diagonais
         [0,4,8],
         [2,4,6]
-
     ],
 
     Start: function() {
@@ -39,10 +40,12 @@ const jogoVelha = {
         let content = "";
 
         for (i in this.board) {
-            content += `<div onclick="jogoVelha.MakePlay('${i}')">${this.board[i]}</div>`; // Diferente
+            content += `<div onclick="jogoVelha.MakePlay('${i}')">${this.board[i]}</div>`;
         }
 
         this.containerElement.innerHTML = content;
+
+        /* this.container_element.innerHTML = this.board.map((element, index) => `<div onclick="tic_tac_toe.make_play('${index}')"> ${element} </div>`).reduce((content, current) => content + current); */
     },
 
     MakePlay: function(position) {
@@ -52,7 +55,9 @@ const jogoVelha = {
             this.Draw();
             let winningSequencesIndex =  this.CheckWinning(this.simbols.options[this.simbols.turnIndex]);
             if(winningSequencesIndex >= 0) {
+                this.StylizeWinnerSequence(this.winningSequences[winningSequencesIndex]);
                 this.GameIsOver();
+                this.CheckWinner();
             } else {
                 this.simbols.Change();
             }
@@ -71,7 +76,6 @@ const jogoVelha = {
                     return i;
             }
         };
-
         return -1;
     },
 
@@ -80,4 +84,22 @@ const jogoVelha = {
         console.log("GAME OVER");
     },
 
+    CheckWinner: function() {
+        let aws;
+        if(this.simbols.turnIndex == 0) {
+            aws = confirm('Jogador "X" ganhou a partida, Reiniciar?');
+        } else {
+            aws = confirm('Jogador "O" ganhou a partida, Reiniciar?');  
+        }
+        if(aws) this.Start();
+    },
+
+    StylizeWinnerSequence: function(sequence) {
+        sequence.forEach((position) => {
+            this
+                .containerElement
+                .querySelector(`div:nth-child(${position + 1})`)
+                .classList.add('winner');
+        });
+    },
 };

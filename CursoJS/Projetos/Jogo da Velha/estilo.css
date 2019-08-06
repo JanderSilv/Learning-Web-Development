@@ -1,5 +1,5 @@
 body {
-    background: rgb(49, 122, 231);
+    background: rgb(37, 38, 39);
     font: normal 15pt Arial;
 }
 
@@ -10,30 +10,31 @@ header {
 
 section {
     background: white;
-    width: 500px;
-    padding: 15px;
+    width: 510px;
+    padding: 14px;
     margin: auto;
     border-radius: 10px;
     box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.507);
 }
 
-div {
-    margin: 10px;
-    text-align: center;
+.game {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    background-color: rgb(54, 54, 59);
+    color: white;
+    border: 6px solid rgb(112, 61, 194);
+    border-radius: 10px;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
 
-#jogoInfo img {
-    max-width: 25px;
-    max-height: 23px;
-    width: auto;
-    height: auto;
-}
-
-#jogoVelha img {
-    max-width:350px;
-    max-height:300px;
-    width: auto;
-    height: auto;
+.game > div {
+    border: 6px solid rgb(112, 61, 194);
+    font: bold 4em Helvetica;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 footer {

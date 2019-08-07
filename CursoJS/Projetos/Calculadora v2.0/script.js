@@ -1,33 +1,83 @@
-let firstInput = true
-let displayValue
+class Calculator {
+    
+    constructor (txtPreviousOperand, txtCurrentOperand) {
+        this.txtPreviousOperand = txtPreviousOperand
+        this.txtCurrentOperand = txtCurrentOperand
+        this.Clear();
+    }
+    
+    AddNumber(number) {
+        if(number === "." && this.currentOperand.includes(".")) return
+        this.currentOperand = this.currentOperand.toString() + number.toString()
+    }
+    
+    ChooseOperation(operation) {
+        if (this.currentOperand === "") return
+        if (this.previousOperand !== "") {
+            this.Compute()
+        }
 
-function addCharacter(character) {
-
-    if (firstInput) {
-        document.calcInput.txtVisor.value = ""
-        firstInput = false;
+        this.operation = operation
+        this.previousOperand = this.currentOperand
+        this.currentOperand = ""
+    }
+    
+    Delete() {
+        this.currentOperand = this.currentOperand.toString().slice(0, -1)
     }
 
-    document.calcInput.txtVisor.value += `${character}`
+    UpdateDisplay() {
+        this.txtCurrentOperand.innerText = this.currentOperand
+        this.txtPreviousOperand.innerText = this.previousOperand
+    }
+    
+    Compute() {
+
+    }
+    
+    Clear() {
+        this.currentOperand = '';
+        this.previousOperand = '';
+        this.operation = undefined;
+    }
+    
 }
 
-function deleteCharacter() {
-    document.calcInput.txtVisor.value -= ""
-}
+const numberButtons = document.querySelectorAll('[data-number')
+const operationButtons = document.querySelectorAll('[data-operation]')
+const equalsButton = document.querySelector('[data-equals]')
+const deleteButton = document.querySelector('[data-delete]')
+const allClearButton = document.querySelector('[data-all-clear]')
+const txtPreviousOperand = document.querySelector('[data-previous-operand]')
+const txtCurrentOperand = document.querySelector('[data-current-operand]')
 
-function ResetCalc() {
-    displayValue = 0
-    document.calcInput.txtVisor.value = "0"
-    firstInput = true;
-}
+const calculator = new Calculator(txtPreviousOperand, txtCurrentOperand)
 
-function Resolver() {
-    document.calcInput.txtVisor.value = eval(document.calcInput.txtVisor.value)
-    console.log(displayValue)
-}
+    numberButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            calculator.AddNumber(button.innerText)
+            calculator.UpdateDisplay()
+        })
+    })
 
-function Quadrado() {
-    displayValue = Number(document.calcInput.txtVisor.value)
-    displayValue = displayValue * displayValue
-    document.calcInput.txtVisor.value = displayValue
-}
+    operationButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            calculator.ChooseOperation(button.innerText)
+            calculator.UpdateDisplay()
+        })
+    })
+
+    equalsButton.addEventListener('click', button => {
+        calculator.Compute()
+        calculator.UpdateDisplay()
+    })
+    
+    allClearButton.addEventListener('click', button => {
+        calculator.Clear()
+        calculator.UpdateDisplay()
+    })
+
+    deleteButton.addEventListener('click', button => {
+        calculator.Delete()
+        calculator.UpdateDisplay()
+    })

@@ -6,34 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Jogo da Velha</title>
     <link rel="stylesheet" href="estilo.css">
-    <style>
-        header {
-            color: white;
-            font: normal 20px Arial;
-            text-align: center;
-        }
-
-        body {
-            background-color: rgb(67, 132, 206);
-        }
-
-        section {
-            background-color: white;
-            width: 500px;
-            padding: 50px;
-            border-radius: 10px;
-            margin: auto;
-        }
-
-
-        footer {
-            text-align: center;
-            font: normal 20px Arial;
-            font-style: italic;
-            color: white;
-        }
-    
-    </style>
 </head>
 <body>
 
@@ -42,29 +14,19 @@
     </header>
 
     <section>
-
-        <div id="jogoInfo">
-            <p>Vez do jogador: 
-            <img src="Imagens/X.png" alt="X">
-            </p>
-        </div>
-
-        <div id="jogoVelha">
-            <img id="fotoVelha" src="Imagens/layout.png" alt="Jogo da Velha">
-        </div>
-
-        <table>
-            <tr>
-                <td></td>
-            </tr>
-
-        </table>
-
+        <div class="game"></div>
     </section>
 
     <footer>
         <p>&copy; JanderSilv</p>
     </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+        jogoVelha.Init(document.querySelector('.game'))
+        jogoVelha.Start();
+    </script>
     
 </body>
 </html>

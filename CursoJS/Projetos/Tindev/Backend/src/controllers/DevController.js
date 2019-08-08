@@ -4,6 +4,23 @@ const axios = require('axios');
 const Dev = require('../models/Dev')
 
 module.exports = {
+
+    async index(req, res) { // Listagem de registros da tabela
+        const {user} = req.headers;
+        
+        const loggedDev = await Dev.findById(user); // Pega a instância do usuário logado
+
+        const users = await Dev.find({ // Pega todos os usuários que atenderem aos filtros abaixo
+            $and: [ // Operador de condição como &&
+                { _id: { $ne: user }}, // Tira o usuário logado da busca
+                { _id: { $nin: loggedDev.likes}},
+                { _id: { $nin: loggedDev.dislikes}},
+            ],
+        })
+
+        return res.json(users);
+    },
+
    async store(req, res) { // async por conta do await
         
         const {username} = req.body; // reg.body.username

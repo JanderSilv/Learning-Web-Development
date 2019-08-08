@@ -14,10 +14,8 @@ module.exports = {
             return res.status(400).json({error: 'Dev not exists'}); // bad request
         }
 
-        if (targetDev.likes.includes(loggedDev._id)) console.log('Deu match')
-
         // Pega o desenvolvedor que está logado na aplicação e pegar informação de like em um vetor de ID
-        loggedDev.likes.push(targetDev._id);
+        loggedDev.dislikes.push(targetDev._id);
 
         await loggedDev.save();
 

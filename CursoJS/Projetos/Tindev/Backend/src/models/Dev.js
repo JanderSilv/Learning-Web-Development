@@ -23,7 +23,7 @@ const DevSchema = new Schema({ // Estrutura da tabela do BD para armazenar infor
         ref: 'Dev',
     }],
 }, {
-    timestamps: true, // Cria uma coluna de forma automatica chamada de createdAt e outra chamada updatedAt
+    timestamps: true, // Cria duas colunas de forma automatica chamadas de createdAt e outra chamada updatedAt
 });
 
 module.exports = model('Dev', DevSchema); // Parametros: Nome do model, Schema

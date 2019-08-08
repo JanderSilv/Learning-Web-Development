@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const routes = require('./routes'); // importar arquivo
 
 const server = express();
@@ -8,6 +9,7 @@ mongoose.connect('mongodb+srv://OmniStack:OmniStack@cluster0-rwu9m.mongodb.net/t
 
 // GET, POST, PUT, DELETE
 
+server.use(cors());
 server.use(express.json());
 server.use(routes); // colocar configuração que vem de outro arquivo ou módulo
 

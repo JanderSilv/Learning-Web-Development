@@ -10,6 +10,11 @@ mongoose.connect('mongodb+srv://OmniStack:OmniStack@cluster0-rwu9m.mongodb.net/t
 // GET, POST, PUT, DELETE
 
 server.use(cors());
+server.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+    });
 server.use(express.json());
 server.use(routes); // colocar configuração que vem de outro arquivo ou módulo
 

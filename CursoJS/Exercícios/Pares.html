@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Horário</title>
+    <title>Pares</title>
     <link rel="stylesheet" href="estilo.css">
+    <style>
+        input[type=number] { 
+            -moz-appearance: textfield;
+        }
+    </style>
 </head>
-<body onload="Carregar()">
+<body>
+
     <header>
-        <h1>Hora do Dia</h1>
+        <h1>Pares</h1>
     </header>
-    
+
     <section>
-        <!-- Hora atual -->
-        <div id="msg"></div>
-        <!-- Saudação -->
-        <div id="sdc"></div>
-        <!-- Imagem -->
-        <div id="foto">
-            <img id="imagem" src="Imagens/foto_manha.png" alt="Foto do Dia"> 
-        </div>
+
+        <form>
+            Inicio: <input data-number type="number" name="numero" id="numero">
+        </form>
     </section>
 
     <footer>
@@ -28,8 +30,6 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        setInterval(Carregar,10000);
-    </script>
+    
 </body>
 </html>

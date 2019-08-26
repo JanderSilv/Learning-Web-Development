@@ -1,2 +1,2 @@
 # Aprendizado-JavaScript
-Material de estudo da Linguagem JavaScript com foco em Desenvolvimento Web
+Material de estudo da Linguagem JavaScript (React, React Native e NodeJS)

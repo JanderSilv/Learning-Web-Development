@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quadrados</title>
+</head>
+<body>
+    <div id="app">
+        <button class="botao">Clique-me</button>
+    </div>
+
+    <script>
+
+        var divApp = document.querySelector('#app');
+        var btnElement = document.querySelector('button.botao');
+
+        btnElement.onclick = function() {
+            var square = document.createElement('div');
+            square.setAttribute('class', 'square');
+
+            square.style.width = '100px';
+            square.style.height = '100px';
+            square.style.margin = '10px';
+            square.style.backgroundColor = '#f00';
+
+            divApp.appendChild(square);
+
+            let squareList = divApp.querySelectorAll('.square');
+
+            for (const square of squareList) {
+                square.onmouseover = function() {
+
+                function getRandomColor() {
+                    var letters = "0123456789ABCDEF";  
+                    var color = "#";  
+                    for (var i = 0; i < 6; i++) {    
+                        color += letters[Math.floor(Math.random() * 16)];  
+                    }  
+                    return color;
+                }    
+                var newColor = getRandomColor();
+
+                square.style.backgroundColor = newColor;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

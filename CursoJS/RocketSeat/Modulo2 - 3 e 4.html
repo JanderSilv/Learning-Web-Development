@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="dom">
+
+        <input type="text" id="iptNome">
+        <button class="botao">Adicionar</button>
+
+        <ul class="nome">
+            
+        </ul>
+    </div>
+
+
+    <script>
+
+    let listaNomes = document.querySelector('.dom ul.nome');
+    let iptNome = document.querySelector('input#iptNome');
+    let submit = document.querySelector('.dom .botao');
+    let i = 0;
+
+    var nomes = ["Diego", "Gabriel", "Lucas"];
+
+    submit.addEventListener('click', () => {
+        Adicionar();
+    });
+    iptNome.addEventListener('keypress', (key) => {
+        if (key.code === "Enter") Adicionar();
+    });
+
+    for (const pos of nomes) {
+        var nome = document.createElement('li');
+        listaNomes.appendChild(nome);
+        
+        let liValue = document.querySelectorAll(`.dom ul.nome li`);
+
+        liValue[i].innerText = pos;
+        i++;
+    }
+
+    function Adicionar() {
+
+        if (iptNome.value.length === 0) {
+            alert("Prencha o campo");
+            return
+        }
+
+        var nome = document.createElement('li');
+        listaNomes.appendChild(nome);
+
+        let liValue = document.querySelectorAll(`.dom ul.nome li`);
+        liValue[i].innerText = iptNome.value;
+        i++;
+        
+        iptNome.value = "";
+        iptNome.focus();
+    }
+
+
+    </script>
+</body>
+</html>

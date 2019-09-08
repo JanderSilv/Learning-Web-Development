@@ -198,8 +198,8 @@ function Adicionar() {
         alert("[ERRO] Valor inválido ou já encontrado na lista")
     }
 
-    txtValor.value = ""
-    txtValor.focus()
+    txtValor.value = "";
+    txtValor.focus();
 
 }
 

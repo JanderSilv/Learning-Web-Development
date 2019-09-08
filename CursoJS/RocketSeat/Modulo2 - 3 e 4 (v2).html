@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="dom">
+
+        <input type="text" id="iptNome">
+        <button class="botao">Adicionar</button>
+
+        <ul class="nome">
+            
+        </ul>
+    </div>
+
+
+    <script>
+
+    let listNamesElement = document.querySelector('.dom ul.nome');
+    let iptNome = document.querySelector('input#iptNome');
+    let submit = document.querySelector('.dom .botao');
+
+    var nomes = ["Diego", "Gabriel", "Lucas"];
+
+    submit.addEventListener('click', () => {
+        Adicionar();
+    });
+    iptNome.addEventListener('keypress', (key) => {
+        if (key.code === "Enter") Adicionar();
+    });
+
+    function renderNames() {
+
+        listNamesElement.innerHTML = "";
+
+        for (const nome of nomes) {
+            let liElement = document.createElement('li');
+            let liValue = document.createTextNode(nome);
+
+            let aElement = document.createElement('a');
+            aElement.setAttribute('href', '#');
+            let aText = document.createTextNode('Excluir');
+            aElement.appendChild(aText);
+
+            let posNome = nomes.indexOf(nome);
+            aElement.addEventListener('click', () => {
+                Excluir(posNome);
+            });
+
+            liElement.appendChild(liValue);
+            listNamesElement.appendChild(liElement);
+            listNamesElement.appendChild(aElement);
+        }
+    }
+
+    function Adicionar() {
+        if (iptNome.value.length === 0) {
+            alert("Prencha o campo");
+            return
+        }
+
+        let liValue = iptNome.value;
+        nomes.push(liValue);
+        
+        iptNome.value = "";
+        iptNome.focus();
+
+        renderNames();
+    }
+
+    function Excluir(pos) {
+        nomes.splice(pos, 1);
+        renderNames();
+    }
+
+    </script>
+</body>
+</html>

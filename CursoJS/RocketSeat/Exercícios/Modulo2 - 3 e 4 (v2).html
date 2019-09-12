@@ -25,8 +25,12 @@
     let iptNome = document.querySelector('input#iptNome');
     let submit = document.querySelector('.dom .botao');
 
-    var nomes = ["Diego", "Gabriel", "Lucas"];
+    // Os dados no storage estão em formato JSON, o "parse" transforma em vetor.
+    var nomes = JSON.parse(localStorage.getItem('listNames')) || [];
 
+    window.addEventListener('load', () => {
+        renderNames();
+    });
     submit.addEventListener('click', () => {
         Adicionar();
     });
@@ -41,20 +45,19 @@
         for (const nome of nomes) {
             let liElement = document.createElement('li');
             let liValue = document.createTextNode(nome);
+            liElement.appendChild(liValue);
+            listNamesElement.appendChild(liElement);
 
             let aElement = document.createElement('a');
             aElement.setAttribute('href', '#');
             let aText = document.createTextNode('Excluir');
             aElement.appendChild(aText);
+            listNamesElement.appendChild(aElement);
 
             let posNome = nomes.indexOf(nome);
             aElement.addEventListener('click', () => {
                 Excluir(posNome);
             });
-
-            liElement.appendChild(liValue);
-            listNamesElement.appendChild(liElement);
-            listNamesElement.appendChild(aElement);
         }
     }
 
@@ -70,12 +73,22 @@
         iptNome.value = "";
         iptNome.focus();
 
+        SaveToStorage();
         renderNames();
     }
 
     function Excluir(pos) {
         nomes.splice(pos, 1);
+
+        SaveToStorage();
         renderNames();
+    }
+
+    function SaveToStorage() {
+        /* Salva as informações do vetor de nomes no armazenamento local. 
+        * Porêm o localStorage não aceitar vetor, para isso é transformado o vetor em JSON.
+        */
+        localStorage.setItem('listNames', JSON.stringify(nomes));
     }
 
     </script>

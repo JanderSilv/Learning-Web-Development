@@ -1,5 +1,6 @@
 // Transforma o código para versões em que todos os browsers entendam.
 
 {
-    "presets": ["@babel/preset-env"] // Entende que está trabalhando no navegador.
+    "presets": ["@babel/preset-env"], // Entende que está trabalhando no navegador.
+    "plugins": ["@babel/plugin-proposal-object-rest-spread"]
 }

@@ -2,6 +2,7 @@ yarn init
 yarn add @babel/cli
 yarn add @babel/preset-env
 yarn add @babel/core
+yarn add @babel/plugin-proposal-object-rest-spread
 
 yarn.lock: Cache do yarn;
 node_modules: armazena todas as dependências do projeto.

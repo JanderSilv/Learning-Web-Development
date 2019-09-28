@@ -5,3 +5,9 @@ const newArr = arr.map(item => item * 2);
 console.log(newArr);
 
 
+const execPromise = async () => {
+    const response = await minhaPromise();
+    console.log(response);
+}
+
+execPromise();

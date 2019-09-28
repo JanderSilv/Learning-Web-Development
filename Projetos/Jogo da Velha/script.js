@@ -12,6 +12,7 @@ const jogoVelha = {
     },
     containerElement: null,
     gameOver: false,
+    countPlay: 0,
     winningSequences: [
         // Sequencias Horizontais
         [0,1,2],
@@ -30,6 +31,7 @@ const jogoVelha = {
         this.board.fill('');
         this.Draw();
         this.gameOver = false;
+        this.countPlay = 0;
     },
 
     Init: function(container) {
@@ -57,7 +59,6 @@ const jogoVelha = {
             if(winningSequencesIndex >= 0) {
                 this.StylizeWinnerSequence(this.winningSequences[winningSequencesIndex]);
                 this.GameIsOver();
-                this.CheckWinner();
             } else {
                 this.simbols.Change();
             }
@@ -79,12 +80,20 @@ const jogoVelha = {
         return -1;
     },
 
+    CheckDraw: function() {
+        for (const pos of this.board) {
+            if (this.board[pos] === "X" || this.board[pos] === "O") {
+                this.countPlay++;
+                console.log(this.countPlay);
+            }
+        }
+     if (this.countPlay === 9) this.GameOverDraw();
+    },
+
     GameIsOver: function() {
         this.gameOver = true;
         console.log("GAME OVER");
-    },
 
-    CheckWinner: function() {
         let aws;
         if(this.simbols.turnIndex == 0) {
             aws = confirm('Jogador "X" ganhou a partida, Reiniciar?');
@@ -92,6 +101,11 @@ const jogoVelha = {
             aws = confirm('Jogador "O" ganhou a partida, Reiniciar?');  
         }
         if(aws) this.Start();
+    },
+
+    GameOverDraw: function() {
+        let msg = confirm('O jogo empatou, Reiniciar?');
+        if(msg) this.Start();
     },
 
     StylizeWinnerSequence: function(sequence) {

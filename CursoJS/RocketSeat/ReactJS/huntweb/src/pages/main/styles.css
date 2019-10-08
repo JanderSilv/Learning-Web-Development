@@ -10,6 +10,7 @@
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4);
 }
 
 .product-list article p {
@@ -49,7 +50,7 @@
 .product-list .actions button {
     margin-top: 5px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     border: 0;
     background: #da552f;
     color: white;

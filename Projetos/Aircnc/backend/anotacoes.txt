@@ -1,0 +1,10 @@
+yarn init -v
+yarn add express
+yarn add nodemon -D
+yarn add mongoose // biblioteca que facilita gerenciar dados do MongoDB
+
+yarn dev
+
+
+// MongoDB
+Database Acess -> Cria Usuário

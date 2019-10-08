@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+section#conteudo {
+    width: 1000px
+    margin: auto;   
+}
+
+iframe#frame-spec {
+    width: 395px;
+    height: 290px;
+    border: none;
+}
+
+footer#rodape-specs {
+    border-top: 1px solid grey;
+    margin-top: 50px;
+}
+
+footer#rodape-specs p {
+    text-align: center;
+}
+
+footer#rodape-specs a {
+    text-align: center;
+    color: blue;
+}

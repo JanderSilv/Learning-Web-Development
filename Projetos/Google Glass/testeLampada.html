@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+        <meta http-equiv="X-UA-Compatible" content = "ie=edge">
+        <title> Teste JavaScript </title>
+    </head>
+    
+    <script>
+        function acendeLampada() {
+            document.getElementById("luz").src="_imagens/lampada-acesa.jpg";
+            
+        }
+        
+        function apagaLampada() {
+            document.getElementById("luz").src="_imagens/lampada-apagada.jpg";
+        }
+        
+        function quebrarLampada() {
+            document.getElementById("luz").src="_imagens/lampada-quebrada.jpg";
+        }
+        
+    </script>
+    
+    <body>
+        <h1> Acenda a Lâmpada </h1>
+        <img src="_imagens/lampada-apagada.jpg" id= "luz" onmousemove= "acendeLampada()" onmouseout= "apagaLampada()" onclick= "quebrarLampada()"/>
+       
+        
+<!--/* Lista de comandos de mouse */-->
+<!--/ onclick-->
+<!--/ onmousemove-->
+<!--/ onmouseout
+*/-->
+    </body>
+</html>

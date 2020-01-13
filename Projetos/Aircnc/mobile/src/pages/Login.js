@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     View, KeyboardAvoidingView,
     Text, TextInput,
@@ -6,11 +6,20 @@ import {
     Platform,
 } from 'react-native';
 
+import api from '../services/api';
+
 import logo from '../assets/logo.png';
 
 // import { Container } from './styles';
 
 export default function Login() {
+
+    const [email, setEmail] = useState();
+
+    async function handleSubmit() {
+
+    }
+
     return ( 
         <KeyboardAvoidingView enabled={Platform.OS === "ios"} behavior="padding" style={styles.container}>
             <Image source={logo} />

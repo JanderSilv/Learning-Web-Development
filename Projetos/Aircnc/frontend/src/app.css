@@ -50,17 +50,43 @@ body, input, button {
 }
 
 .content form label {
-    font-size: 14px;
-    color: #444;
-    font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 8px;
+    
+    color: #444;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .content form input {
+    height: 45px;
+    
     margin-bottom: 20px;
+    padding: 0 15px;
+    
     border: 1px solid #ddd;
     border-radius: 2px;
-    height: 45px;
-    padding: 0 15px;
+
     font-size: 16px;
+}
+
+.content button.btn {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 20px;
+
+    border: 0;
+    border-radius: 2px;
+    background: #f05a5b;
+
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.content button.btn:hover {
+    background: #e14f50;
 }

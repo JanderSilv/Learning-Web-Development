@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Aircnc" title="#delicinha" src=".github/logo.png" width="250px" />
+    <img alt="Aircnc" title="#delicinha" src="https://github.com/Rocketseat/semana-omnistack-9/blob/master/.github/logo.png" width="250px" />
 </h1>
 
 <h4 align="center">
@@ -32,7 +32,7 @@
 <br>
 
 <p align="center">
-  <img alt="Frontend" src=".github/aircnc.png" width="100%">
+  <img alt="Frontend" src="https://github.com/Rocketseat/semana-omnistack-9/blob/master/.github/aircnc.png" width="100%">
 </p>
 
 ## :rocket: Tecnologias

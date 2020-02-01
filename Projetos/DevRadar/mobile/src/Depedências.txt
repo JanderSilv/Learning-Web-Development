@@ -1,0 +1,11 @@
+yarn global add expo-cli
+yarn add axios
+expo init mobile
+yarn add react-navigation
+yarn add react-navigation-stack
+expo install react-native-maps
+yarn add react-native-gesture-handler
+yarn add react-native-safe-area-context
+yarn add @react-native-community/masked-view
+yarn add expo-location
+expo install react-native-webview

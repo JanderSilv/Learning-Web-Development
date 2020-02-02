@@ -17,6 +17,7 @@ export default function Main({  navigation }) {
 
     const [devs, setDevs] = useState([]);
     const [currentRegion, setCurrentRegion] = useState(null);
+    const [techs, setTechs] = useState('');
 
     useEffect(() => {
         async function loadInitialPosition() {
@@ -24,7 +25,7 @@ export default function Main({  navigation }) {
             
             if (granted) {
                 const { coords } = await getCurrentPositionAsync({
-                    enableHighAccuracy: true,
+                    enableHighAccuracy: false,
                 });
 
                 const { latitude, longitude } = coords;
@@ -48,7 +49,7 @@ export default function Main({  navigation }) {
             params: {
                 latitude,
                 longitude,
-                techs: 'ReactJS',
+                techs,
             }
         }).then(res => {
             console.log(res.data);
@@ -61,8 +62,6 @@ export default function Main({  navigation }) {
 
     function handleRegionChange(region) {
         // console.log(region);
-        console.log('.');
-        
         
         setCurrentRegion(region);
     }
@@ -110,6 +109,8 @@ export default function Main({  navigation }) {
                     placeholderTextColor="#999"
                     autoCapitalize="words"
                     autoCorrect={false}
+                    value={techs}
+                    onChangeText={setTechs}
                 />
 
                 <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>

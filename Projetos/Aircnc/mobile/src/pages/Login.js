@@ -1,23 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     View, KeyboardAvoidingView,
-    Text, TextInput,
-    Image, StyleSheet, TouchableOpacity,
-    Platform,
+    Text, TextInput, Image, 
+    StyleSheet, TouchableOpacity,
+    Platform, AsyncStorage,
 } from 'react-native';
 
 import api from '../services/api';
 
 import logo from '../assets/logo.png';
 
-// import { Container } from './styles';
+export default function Login({ navigation }) {
 
-export default function Login() {
+    const [email, setEmail] = useState('');
+    const [techs, setTechs] = useState('');
 
-    const [email, setEmail] = useState();
+    /* Verificação de Login */
+    useEffect(() => {
+        AsyncStorage.getItem('user').then(user => {
+            if (user) navigation.navigate('List');
+        });
+    }, []);
+    
+    function handleSubmit() {
+        api.post('/sessions', {
+            email
+        }).then(async res => {
+            console.log(res.data);
+            
+            const { _id } = res.data;
 
-    async function handleSubmit() {
-
+            await AsyncStorage.setItem('user', _id);
+            await AsyncStorage.setItem('techs', techs);
+            
+            navigation.navigate('List');
+        }).catch(error => {
+            console.log('sessions => ' + error);
+            
+        });
     }
 
     return ( 
@@ -34,6 +54,8 @@ export default function Login() {
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
+                    value={email}
+                    onChangeText={setEmail}
                 />
 
                 <Text style={styles.label}>TECNOLOGIAS *</Text>
@@ -42,9 +64,11 @@ export default function Login() {
                     placeholder="Tecnologias de interesse"
                     placeholderTextColor="#999"
                     autoCapitalize="words"
+                    value={techs}
+                    onChangeText={setTechs}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                     <Text style={styles.buttonText}>Encontrar Spots</Text>
                 </TouchableOpacity>
 

@@ -1,11 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react'
+import { 
+    View, Text, 
+    StyleSheet, Image, AsyncStorage } from 'react-native';
 
-import { View } from 'react-native';
+import logo from '../assets/logo.png';
 
-// import { Container } from './styles';
+export default function List() {
 
-export default class List extends Component {
-  render() {
-    return <View />;
-  }
+    const [techs, setTechs] = useState([]);
+
+    useEffect(() => {
+        AsyncStorage.getItem('techs').then(storagedTechs => {
+            const techsArray = storagedTechs.split(',').map(tech => tech.trim());
+
+            setTechs(techsArray);
+        });
+    }, []);
+
+    return (
+        <View style={StyleSheet.container}>
+            <Image source={logo} />
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    containert: {
+        flex: 1,
+    },
+});

@@ -1,194 +1,202 @@
-import React, { useState, useEffect } from 'react';
-import { 
-    View, 
-    StyleSheet, 
-    Image, 
-    Text, TextInput, 
-    TouchableOpacity,
-} from 'react-native';
-import MapView, {  Marker, Callout } from 'react-native-maps';
-import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
-import { MaterialIcons } from '@expo/vector-icons';
-import api from '../services/api';
+import React, { useState, useEffect, Fragment } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
+import MapView, { Marker, Callout } from "react-native-maps";
+import {
+  requestPermissionsAsync,
+  getCurrentPositionAsync
+} from "expo-location";
+import { MaterialIcons } from "@expo/vector-icons";
+import api from "../services/api";
 
-export default function Main({  navigation }) {
+export default function Main({ navigation }) {
+  // verificação se o teclado estiver aberto, dentro da depedência do React Native { Keyboar }. Olhar documentação.
 
-    // verificação se o teclado estiver aberto, dentro da depedência do React Native { Keyboar }. Olhar documentação.
+  const [devs, setDevs] = useState([]);
+  const [currentRegion, setCurrentRegion] = useState(null);
 
-    const [devs, setDevs] = useState([]);
-    const [currentRegion, setCurrentRegion] = useState(null);
+  useEffect(() => {
+    async function loadInitialPosition() {
+      const { granted } = await requestPermissionsAsync();
 
-    useEffect(() => {
-        async function loadInitialPosition() {
-            const  { granted } = await requestPermissionsAsync();
-            
-            if (granted) {
-                const { coords } = await getCurrentPositionAsync({
-                    enableHighAccuracy: true,
-                });
-
-                const { latitude, longitude } = coords;
-
-                setCurrentRegion({
-                    latitude,
-                    longitude,
-                    latitudeDelta: 0.04,
-                    longitudeDelta: 0.04,
-                });
-            }
-        }
-
-        loadInitialPosition();
-    }, []);
-
-    function loadDevs() {
-        const { latitude, longitude } = currentRegion;
-
-        api.get('/search', {
-            params: {
-                latitude,
-                longitude,
-                techs: 'ReactJS',
-            }
-        }).then(res => {
-            console.log(res.data);
-
-            setDevs(res.data.devs);
-        }).catch(error => {
-            console.log('Devs => ' + error);
+      if (granted) {
+        const { coords } = await getCurrentPositionAsync({
+          enableHighAccuracy: true
         });
+
+        const { latitude, longitude } = coords;
+
+        setCurrentRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.04,
+          longitudeDelta: 0.04
+        });
+      }
     }
 
-    function handleRegionChange(region) {
-        // console.log(region);
-        console.log('.');
-        
-        
-        setCurrentRegion(region);
-    }
+    loadInitialPosition();
+  }, []);
 
-    if (!currentRegion) {
-        return null;
-    }
+  function loadDevs() {
+    const { latitude, longitude } = currentRegion;
 
-    return (
+    api
+      .get("/search", {
+        params: {
+          latitude,
+          longitude,
+          techs: "ReactJS"
+        }
+      })
+      .then(res => {
+        console.log(res.data);
 
-        <>
+        setDevs(res.data.devs);
+      })
+      .catch(error => {
+        console.log("Devs => " + error);
+      });
+  }
 
-            <MapView onRegionChangeComplete={handleRegionChange} initialRegion={currentRegion} style={styles.map}>
+  function handleRegionChange(region) {
+    // console.log(region);
+    console.log(".");
+    setCurrentRegion(region);
+  }
 
-                {devs.map(dev => (
-                    <Marker key={dev._id} coordinate={{
-                        latitude: dev.location.coordinates[1],
-                        longitude: dev.location.coordinates[0],
-                    }}>
+  const navigateProfile = () => {
+    navigation.navigate("Profile", {
+      github_username: dev.github_username
+    });
+  }
 
-                    <Image style={styles.avatar} source={{ uri: dev.avatar_url}} />
+  if (!currentRegion) {
+    return null;
+  }
 
-                    <Callout onPress={() => {
-                        navigation.navigate('Profile', { github_username: dev.github_username });
-                    }}>
-                        <View style={styles.callout}>
+  return (
+    <Fragment>
+      <MapView
+        onRegionChangeComplete={handleRegionChange}
+        initialRegion={currentRegion}
+        style={styles.map}
+      >
+        {devs.map(dev => (
+          <Marker
+            key={dev._id}
+            coordinate={{
+              latitude: dev.location.coordinates[1],
+              longitude: dev.location.coordinates[0]
+            }}
+          >
+            <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
 
-                            <Text style={styles.devName}>{dev.name}</Text>
-                            <Text style={styles.devBio}>{dev.bio}</Text>
-                            <Text style={styles.devTechs}>{dev.techs.join(', ')} </Text>
+            <Callout
+              onPress={navigateProfile}
+            >
+              <View style={styles.callout}>
+                <Text style={styles.devName}>{dev.name}</Text>
+                <Text style={styles.devBio}>{dev.bio}</Text>
+                <Text style={styles.devTechs}>{dev.techs.join(", ")} </Text>
+              </View>
+            </Callout>
+          </Marker>
+        ))}
+      </MapView>
 
-                        </View>
+      <View style={styles.searchForm}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar devs por techs..."
+          placeholderTextColor="#999"
+          autoCapitalize="words"
+          autoCorrect={false}
+        />
 
-                    </Callout>
-
-                    </Marker>
-                ))}
-
-            </MapView>
-
-            <View style={styles.searchForm}>
-                <TextInput 
-                    style={styles.searchInput} 
-                    placeholder="Buscar devs por techs..."
-                    placeholderTextColor="#999"
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                />
-
-                <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
-                    <MaterialIcons name="my-location" size={20} color="#FFF" />
-                </TouchableOpacity>
-            </View>
-        </>
-    );
+        <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
+          <MaterialIcons name="my-location" size={20} color="#FFF" />
+        </TouchableOpacity>
+      </View>
+    </Fragment>
+  );
 }
 
 const styles = StyleSheet.create({
-    map: {
-        flex: 1,
+  map: {
+    flex: 1
+  },
+
+  avatar: {
+    width: 54,
+    height: 54,
+    borderRadius: 4,
+    borderWidth: 4,
+    borderColor: "white"
+  },
+
+  //#region DevInfo
+  callout: {
+    fontWeight: "bold",
+    fontSize: 16
+  },
+
+  devBio: {
+    color: "#666",
+    marginTop: 5
+  },
+
+  devBio: {
+    color: "#666",
+    marginTop: 5
+  },
+
+  devTechs: {
+    marginTop: 5
+  },
+  //#endregion
+
+  searchForm: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    right: 20,
+    zIndex: 5,
+    flexDirection: "row"
+  },
+
+  searchInput: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#FFF",
+    color: "#333",
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    //#region IosShadow
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 4,
+      height: 4
     },
-
-    avatar: {
-        width: 54,
-        height: 54,
-        borderRadius: 4,
-        borderWidth: 4,
-        borderColor: 'white',
-    },
-
-    //#region DevInfo
-        callout: {
-            fontWeight: 'bold',
-            fontSize: 16,
-        },
-
-        devBio: {
-            color: '#666',
-            marginTop: 5,
-        },
-
-        devBio: {
-            color: '#666',
-            marginTop: 5,
-        },
-
-        devTechs: {
-            marginTop: 5,
-        },
     //#endregion
+    elevation: 2 //shadow no Android
+  },
 
-    searchForm: {
-        position: 'absolute',
-        top: 20,
-        left: 20,
-        right:20,
-        zIndex: 5,
-        flexDirection: 'row',
-    },
-
-    searchInput: {
-        flex: 1,
-        height: 50,
-        backgroundColor: '#FFF',
-        color: '#333',
-        borderRadius: 25,
-        paddingHorizontal: 20,
-        fontSize: 16,
-        //#region IosShadow
-            shadowColor: '#000',
-            shadowOpacity: .2,
-            shadowOffset: {
-                width: 4,
-                height: 4,
-            },
-        //#endregion
-        elevation: 2, //shadow no Android
-    },
-
-    loadButton: {
-        width: 50, height: 50,
-        backgroundColor: '#8E4Dff',
-        borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 15,
-    },
-
+  loadButton: {
+    width: 50,
+    height: 50,
+    backgroundColor: "#8E4Dff",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 15
+  }
 });

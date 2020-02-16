@@ -20,6 +20,7 @@ export default function Main({ navigation }) {
 
   const [devs, setDevs] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(null);
+  const [techs, setTechs] = useState('');
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -52,7 +53,7 @@ export default function Main({ navigation }) {
         params: {
           latitude,
           longitude,
-          techs: "ReactJS"
+          techs,
         }
       })
       .then(res => {
@@ -67,14 +68,7 @@ export default function Main({ navigation }) {
 
   function handleRegionChange(region) {
     // console.log(region);
-    console.log(".");
     setCurrentRegion(region);
-  }
-
-  const navigateProfile = () => {
-    navigation.navigate("Profile", {
-      github_username: dev.github_username
-    });
   }
 
   if (!currentRegion) {
@@ -99,7 +93,11 @@ export default function Main({ navigation }) {
             <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
 
             <Callout
-              onPress={navigateProfile}
+              onPress = { () => {
+                navigation.navigate("Profile", {
+                  github_username: dev.github_username
+                })}
+              }
             >
               <View style={styles.callout}>
                 <Text style={styles.devName}>{dev.name}</Text>
@@ -118,6 +116,8 @@ export default function Main({ navigation }) {
           placeholderTextColor="#999"
           autoCapitalize="words"
           autoCorrect={false}
+          value={techs}
+          onChangeText={setTechs}
         />
 
         <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
@@ -138,18 +138,17 @@ const styles = StyleSheet.create({
     height: 54,
     borderRadius: 4,
     borderWidth: 4,
-    borderColor: "white"
+    borderColor: "#FFF"
   },
 
   //#region DevInfo
   callout: {
-    fontWeight: "bold",
-    fontSize: 16
+    width: 260,
   },
 
-  devBio: {
-    color: "#666",
-    marginTop: 5
+  devName: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
 
   devBio: {

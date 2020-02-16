@@ -20,8 +20,6 @@ export default function Login({ history }) {
         }).catch(error => {
             console.log(error);
         });
-
-
     }
 
     return (

@@ -48,7 +48,6 @@ module.exports = {
             return response.json(dev);
         }).catch(error => {
             console.log(error);
-            
         });
-    }
+    },
 }

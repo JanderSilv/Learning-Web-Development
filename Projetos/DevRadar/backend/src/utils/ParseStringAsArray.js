@@ -1,5 +1,8 @@
 
 
 module.exports = function parseStringAsArray(techs) {
-    return techs.split(',').map(tech => tech.trim());
+    return techs.split(',').map(tech => (
+        tech.trim()/*, 
+        tech.toLowerCase()*/
+        ));
 }

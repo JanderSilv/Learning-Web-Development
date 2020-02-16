@@ -10,7 +10,7 @@
   },
   "javascript.implicitProjectConfig.checkJs": false,
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.formatOnType": true,
   "eslint.validate": [
     "javascript",
@@ -24,5 +24,6 @@
       "autoFix": true
     }
   ],
-  "typescriptHero.imports.organizeOnSave": true
+  "typescriptHero.imports.organizeOnSave": true,
+  "discord.enabled": true
 }

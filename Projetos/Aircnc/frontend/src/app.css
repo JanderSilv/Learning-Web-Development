@@ -58,6 +58,12 @@ body, input, button {
     font-weight: bold;
 }
 
+.content form label span {
+    color: #999;
+    font-size: 12px;
+    font-weight: normal;
+}
+
 .content form input {
     height: 45px;
     

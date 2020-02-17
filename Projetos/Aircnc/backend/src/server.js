@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -12,5 +13,6 @@ mongoose.connect('mongodb+srv://Omnistack:omnistack@jander-rwu9m.mongodb.net/tes
 app.use(cors());
 app.use(express.json()); // indica que a requisição vem em formato JSON
 app.use(routes);
+app.use('/files', express.static());
 
 app.listen(3333);

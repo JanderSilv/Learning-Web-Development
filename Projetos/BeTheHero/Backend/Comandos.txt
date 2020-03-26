@@ -1,0 +1,12 @@
+npm init -y
+npm install express
+npm install nodemon -D
+npm install sqlite3
+npm install knex 
+npx knex init
+
+database:
+npx knex -> Lista todos 
+
+npx knex migrate:make create_ongs
+npx knex migrate:latest

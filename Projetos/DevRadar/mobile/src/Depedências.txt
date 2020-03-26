@@ -9,3 +9,4 @@ yarn add react-native-safe-area-context
 yarn add @react-native-community/masked-view
 yarn add expo-location
 expo install react-native-webview
+yarn add socket.io-client

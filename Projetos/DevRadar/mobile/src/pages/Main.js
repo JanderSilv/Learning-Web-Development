@@ -13,189 +13,206 @@ import {
   getCurrentPositionAsync
 } from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
+
 import api from "../services/api";
+import { connect, disconnect, subscribeToNewDevs } from '../services/socket';
 
 export default function Main({ navigation }) {
-  // verificação se o teclado estiver aberto, dentro da depedência do React Native { Keyboar }. Olhar documentação.
+    // verificação se o teclado estiver aberto, dentro da depedência do React Native { Keyboar }. Olhar documentação.
 
-  const [devs, setDevs] = useState([]);
-  const [currentRegion, setCurrentRegion] = useState(null);
-  const [techs, setTechs] = useState('');
+    const [devs, setDevs] = useState([]);
+    const [currentRegion, setCurrentRegion] = useState(null);
+    const [techs, setTechs] = useState('');
 
-  useEffect(() => {
-    async function loadInitialPosition() {
-      const { granted } = await requestPermissionsAsync();
+    useEffect(() => {
+        async function loadInitialPosition() {
+        const { granted } = await requestPermissionsAsync();
 
-      if (granted) {
-        const { coords } = await getCurrentPositionAsync({
-          enableHighAccuracy: true
-        });
+        if (granted) {
+            const { coords } = await getCurrentPositionAsync({
+            enableHighAccuracy: true
+            });
 
-        const { latitude, longitude } = coords;
+            const { latitude, longitude } = coords;
 
-        setCurrentRegion({
+            setCurrentRegion({
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04
+            });
+        }
+        }
+
+        loadInitialPosition();
+    }, []);
+
+    useEffect(() => {
+        subscribeToNewDevs(dev => setDevs([...devs, dev])); 
+    }, [devs]);
+
+    function setupWebSocket() {
+        disconnect();
+
+        const {
           latitude,
-          longitude,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.04
-        });
-      }
+          longitude
+        } = currentRegion;
+
+        connect(latitude, longitude, techs);
     }
 
-    loadInitialPosition();
-  }, []);
+    function loadDevs() {
+        const { latitude, longitude } = currentRegion;
 
-  function loadDevs() {
-    const { latitude, longitude } = currentRegion;
+        api.get("/search", {
+            params: {
+            latitude,
+            longitude,
+            techs,
+            }
+        })
+        .then(res => {
+            console.log(res.data);
 
-    api
-      .get("/search", {
-        params: {
-          latitude,
-          longitude,
-          techs,
-        }
-      })
-      .then(res => {
-        console.log(res.data);
+            setDevs(res.data.devs);
+            setupWebSocket();
+        })
+        .catch(error => {
+            console.log("Devs => " + error);
+        });
+    }
 
-        setDevs(res.data.devs);
-      })
-      .catch(error => {
-        console.log("Devs => " + error);
-      });
-  }
+    function handleRegionChange(region) {
+        // console.log(region);
+        setCurrentRegion(region);
+    }
 
-  function handleRegionChange(region) {
-    // console.log(region);
-    setCurrentRegion(region);
-  }
+    if (!currentRegion) {
+        return null;
+    }
 
-  if (!currentRegion) {
-    return null;
-  }
-
-  return (
-    <Fragment>
-      <MapView
-        onRegionChangeComplete={handleRegionChange}
-        initialRegion={currentRegion}
-        style={styles.map}
-      >
-        {devs.map(dev => (
-          <Marker
-            key={dev._id}
-            coordinate={{
-              latitude: dev.location.coordinates[1],
-              longitude: dev.location.coordinates[0]
-            }}
-          >
-            <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
-
-            <Callout
-              onPress = { () => {
-                navigation.navigate("Profile", {
-                  github_username: dev.github_username
-                })}
-              }
+    return (
+        <Fragment>
+        <MapView
+            onRegionChangeComplete={handleRegionChange}
+            initialRegion={currentRegion}
+            style={styles.map}
+        >
+            {devs.map(dev => (
+            <Marker
+                key={dev._id}
+                coordinate={{
+                latitude: dev.location.coordinates[1],
+                longitude: dev.location.coordinates[0]
+                }}
             >
-              <View style={styles.callout}>
-                <Text style={styles.devName}>{dev.name}</Text>
-                <Text style={styles.devBio}>{dev.bio}</Text>
-                <Text style={styles.devTechs}>{dev.techs.join(", ")} </Text>
-              </View>
-            </Callout>
-          </Marker>
-        ))}
-      </MapView>
+                <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
 
-      <View style={styles.searchForm}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Buscar devs por techs..."
-          placeholderTextColor="#999"
-          autoCapitalize="words"
-          autoCorrect={false}
-          value={techs}
-          onChangeText={setTechs}
-        />
+                <Callout
+                onPress = { () => {
+                    navigation.navigate("Profile", {
+                    github_username: dev.github_username
+                    })}
+                }
+                >
+                <View style={styles.callout}>
+                    <Text style={styles.devName}>{dev.name}</Text>
+                    <Text style={styles.devBio}>{dev.bio}</Text>
+                    <Text style={styles.devTechs}>{dev.techs.join(", ")} </Text>
+                </View>
+                </Callout>
+            </Marker>
+            ))}
+        </MapView>
 
-        <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
-          <MaterialIcons name="my-location" size={20} color="#FFF" />
-        </TouchableOpacity>
-      </View>
-    </Fragment>
-  );
+        <View style={styles.searchForm}>
+            <TextInput
+            style={styles.searchInput}
+            placeholder="Buscar devs por techs..."
+            placeholderTextColor="#999"
+            autoCapitalize="words"
+            autoCorrect={false}
+            value={techs}
+            onChangeText={setTechs}
+            />
+
+            <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
+            <MaterialIcons name="my-location" size={20} color="#FFF" />
+            </TouchableOpacity>
+        </View>
+        </Fragment>
+    );
 }
 
 const styles = StyleSheet.create({
-  map: {
-    flex: 1
-  },
+    map: {
+        flex: 1
+    },
 
-  avatar: {
-    width: 54,
-    height: 54,
-    borderRadius: 4,
-    borderWidth: 4,
-    borderColor: "#FFF"
-  },
+    avatar: {
+        width: 54,
+        height: 54,
+        borderRadius: 4,
+        borderWidth: 4,
+        borderColor: "#FFF"
+    },
 
-  //#region DevInfo
-  callout: {
-    width: 260,
-  },
+    //#region DevInfo
+    callout: {
+        width: 260,
+    },
 
-  devName: {
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+    devName: {
+        fontWeight: "bold",
+        fontSize: 16,
+    },
 
-  devBio: {
-    color: "#666",
-    marginTop: 5
-  },
+    devBio: {
+        color: "#666",
+        marginTop: 5
+    },
 
-  devTechs: {
-    marginTop: 5
-  },
-  //#endregion
-
-  searchForm: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    right: 20,
-    zIndex: 5,
-    flexDirection: "row"
-  },
-
-  searchInput: {
-    flex: 1,
-    height: 50,
-    backgroundColor: "#FFF",
-    color: "#333",
-    borderRadius: 25,
-    paddingHorizontal: 20,
-    fontSize: 16,
-    //#region IosShadow
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: {
-      width: 4,
-      height: 4
+    devTechs: {
+        marginTop: 5
     },
     //#endregion
-    elevation: 2 //shadow no Android
-  },
 
-  loadButton: {
-    width: 50,
-    height: 50,
-    backgroundColor: "#8E4Dff",
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 15
-  }
+    searchForm: {
+        position: "absolute",
+        top: 20,
+        left: 20,
+        right: 20,
+        zIndex: 5,
+        flexDirection: "row"
+    },
+
+    searchInput: {
+        flex: 1,
+        height: 50,
+        backgroundColor: "#FFF",
+        color: "#333",
+        borderRadius: 25,
+        paddingHorizontal: 20,
+        fontSize: 16,
+        //#region IosShadow
+        shadowColor: "#000",
+        shadowOpacity: 0.2,
+        shadowOffset: {
+        width: 4,
+        height: 4
+        },
+        //#endregion
+        elevation: 2 //shadow no Android
+    },
+
+    loadButton: {
+        width: 50,
+        height: 50,
+        backgroundColor: "#8E4Dff",
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: 15
+    }
 });

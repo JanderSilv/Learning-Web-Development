@@ -4,6 +4,7 @@ npm install nodemon -D
 npm install sqlite3
 npm install knex 
 npx knex init
+npm install cors
 
 database:
 npx knex -> Lista todos 

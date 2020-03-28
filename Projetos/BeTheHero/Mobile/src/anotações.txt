@@ -1,0 +1,2 @@
+yarn add intl
+intl: Formatação de moeda

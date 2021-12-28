@@ -1,2 +1,2 @@
-# Aprendizado-JavaScript
-Material de estudo da Linguagem JavaScript (React, React Native e NodeJS)
+# 📖 Learning-Web-Development
+Material de estudo de Desenvolvimento Web e Mobile (HTML, CSS, JavaScript, React, React Native, ElectronJS, Gatsby e NodeJS) 
